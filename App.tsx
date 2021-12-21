@@ -1,20 +1,29 @@
+import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import AppLoading from 'expo-app-loading';
+import { Heebo_100Thin,Heebo_400Regular, Heebo_700Bold, Heebo_300Light,Heebo_200ExtraLight, useFonts } from '@expo-google-fonts/heebo';
+import Routes from './src/routes';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+const App = () => {
+  const [fontsLoaded] = useFonts({
+    Heebo_100Thin,
+    Heebo_200ExtraLight,
+    Heebo_300Light,
+    Heebo_400Regular,
+    Heebo_700Bold
+  })
+  if (!fontsLoaded) {
+    return <AppLoading />
+  } else {
+    return (
+      <>
+        <StatusBar style="auto" />
+        <Routes />
+      </>
+    );
+  }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+
+
+export default App;
