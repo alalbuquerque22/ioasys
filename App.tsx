@@ -1,7 +1,7 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import AppLoading from 'expo-app-loading';
-import { Heebo_100Thin,Heebo_400Regular, Heebo_700Bold, Heebo_300Light,Heebo_200ExtraLight, useFonts } from '@expo-google-fonts/heebo';
+import { Heebo_100Thin,Heebo_400Regular,Heebo_500Medium, Heebo_700Bold, Heebo_300Light,Heebo_200ExtraLight, useFonts } from '@expo-google-fonts/heebo';
 import Routes from './src/routes';
 
 const App = () => {
@@ -10,6 +10,7 @@ const App = () => {
     Heebo_200ExtraLight,
     Heebo_300Light,
     Heebo_400Regular,
+    Heebo_500Medium,
     Heebo_700Bold
   })
   if (!fontsLoaded) {

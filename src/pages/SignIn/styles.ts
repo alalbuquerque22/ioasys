@@ -3,7 +3,8 @@ const { width, height } = Dimensions.get('window');
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#8257e5',
+        height: height,
+        alignItems: 'center',
         justifyContent: 'center',
 
     },
@@ -14,6 +15,7 @@ const styles = StyleSheet.create({
         height: height,
     },
     logoContent: {
+        // marginTop: height * 0.3,
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
@@ -51,7 +53,7 @@ const styles = StyleSheet.create({
         marginTop: width * 0.02,
 
         color: '#fff',
-        fontFamily: 'Heebo_300Light',
+        fontFamily: 'Heebo_400Regular',
     },
     boxButton: {
         position: 'absolute',
