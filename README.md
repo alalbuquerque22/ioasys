@@ -4,7 +4,7 @@
 ## Aplicação consumindo api "IOASYS", utilizando react native, axios, react navigation e expo.
   
 
-[Download do apk para executar no android](https://expo.dev/artifacts/6996b07f-2cba-467a-af91-b42002950fa5)
+[Download do apk para executar no android](https://expo.dev/artifacts/370b296d-8a94-451c-a921-961692c42d66)
 
 ## **:computer: TECNOLOGIA**
 
