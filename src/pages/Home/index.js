@@ -28,7 +28,8 @@ const Home = ({ navigation }) => {
   const [originalData, setOriginalData] = useState([]);
   const [page, setPage] = useState(1);
   const [modalVisible, setModalVisible] = useState(false);
-  const [isSelect, setIsSelect] = useState(false);
+  const [selected, setSelected] = useState([]);
+  const [yearSelected, setYearSelected] = useState([]);
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState([
     "Design",
@@ -40,7 +41,7 @@ const Home = ({ navigation }) => {
     "Design Thinking",
     "Outros",
   ]);
-  const [year] = useState([
+  const [year, setYear] = useState([
     "2015",
     "2016",
     "2017",
@@ -52,32 +53,50 @@ const Home = ({ navigation }) => {
   useEffect(() => {
     getBooks();
   }, [page]);
+  function toggleSelection(item) {
+    let index = selected.findIndex(i => i === item);
+    let arrSelected = [...selected];
+    if (index !== -1) {
+      arrSelected.splice(index, 1);
+    } else {
+      arrSelected.push(item);
+    }
+    setSelected(arrSelected);
+  }
+  function toggleSelectionYear(item) {
+    let index = yearSelected.findIndex(i => i === item);
+    let arrSelected = [...yearSelected];
+    if (index !== -1) {
+      arrSelected.splice(index, 1);
+    } else {
+      arrSelected.push(item);
+    }
+    setYearSelected(arrSelected);
+    console.log('yearSelected',yearSelected)
+  }
 
   const searchBookByTitle = (text) => {
     let arr = originalData;
     setBooks(
       arr.filter(
         (book) =>
-          book.title.includes(search) ||
-          book.authors.includes(search) ||
-          book.publisher.includes(search)
+          book.title.toLowerCase().includes(search.toLowerCase()) ||
+          book.authors.toLowerCase().includes(search.toLowerCase()) ||
+          book.publisher.toLowerCase().includes(search.toLowerCase())
       )
     );
 
-    // if (setSearch === "") {
-    //   setBooks(books);
-    // } else {
-    //   setBooks(
-    //     arr.filter((book) => {
-    //       book.title.toLowerCase().indexOf(search.toLowerCase()) > -1;
-    //     })
-    //   );
-    //   console.log(books);
-    // }
   };
   const getBooks = async () => {
     await api
-      .get(`/books?page=${page}`, { timeout: 1000 * 5 })
+      .get(`/books?page=${page}`, {
+        params: {
+          published:yearSelected.length > 0 ? yearSelected : null,
+          category: selected.length > 0 ? selected : null,
+        },
+        timeout: 1000 * 5
+        
+        })
       .then((response) => {
         setBooks(response.data.data);
         setOriginalData(response.data.data);
@@ -98,12 +117,16 @@ const Home = ({ navigation }) => {
           key={item}
           style={[
             styles.button,
-            isSelect ? styles.buttonSelected : styles.buttonUnselected,
+            yearSelected?.findIndex(i => i === item) !== -1 ?
+              styles.buttonSelected :
+              styles.buttonUnselected,
           ]}
-          onPress={() => setIsSelect(!isSelect)}
+          onPress={() => toggleSelectionYear(item)}
         >
           <Text
-            style={[styles.textStyle, isSelect ? null : styles.textUnselected]}
+            style={[styles.textStyle, yearSelected?.findIndex(i => i === item) !== -1 ?
+              null : styles.textUnselected
+            ]}
           >
             {item}
           </Text>
@@ -190,7 +213,9 @@ const Home = ({ navigation }) => {
               />
             </>
           )}
-          onEndReachedThreshold={0.3}
+          refreshing={false}
+          onRefresh={() => {getBooks()}}
+          onEndReachedThreshold={0.5}
           onEndReached={() => {
             setPage(page + 1);
           }}
@@ -216,16 +241,17 @@ const Home = ({ navigation }) => {
                         key={item}
                         style={[
                           styles.button,
-                          isSelect
-                            ? styles.buttonSelected
-                            : styles.buttonUnselected,
+                          selected?.findIndex(i => i === item) !== -1 ?
+                            styles.buttonSelected :
+                            styles.buttonUnselected,
                         ]}
-                        onPress={() => setIsSelect(!isSelect)}
+                        onPress={() => toggleSelection(item)}
                       >
                         <Text
                           style={[
                             styles.textStyle,
-                            isSelect ? null : styles.textUnselected,
+                            selected?.findIndex(i => i === item) !== -1 ?
+                              null : styles.textUnselected,
                           ]}
                         >
                           {item}
@@ -242,6 +268,7 @@ const Home = ({ navigation }) => {
                 </View>
               </View>
               <Pressable
+
                 style={[
                   styles.button,
                   {
@@ -249,9 +276,12 @@ const Home = ({ navigation }) => {
                     borderWidth: 1,
                     width: "25%",
                     marginTop: 40,
+                    backgroundColor: '#FFF'
                   },
                 ]}
-                onPress={() => setModalVisible(!modalVisible)}
+                onPress={() => {
+                  setModalVisible(!modalVisible);
+                   getBooks()}}
               >
                 <Text style={[styles.textStyle, { color: "#B22E6F" }]}>
                   Filtrar

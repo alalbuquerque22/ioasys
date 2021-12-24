@@ -10,6 +10,7 @@ import {
   KeyboardAvoidingView,
   ScrollView,
   Platform,
+  Alert,
 } from "react-native";
 import styles from "./styles";
 import background from "../../assets/background.png";
@@ -35,9 +36,10 @@ const SignIn = ({ navigation }) => {
       })
       .then((response) => {
         api.defaults.headers.Authorization = `Bearer ${response.headers.authorization}`;
-        navigation.replace("Home");
+        navigation.replace('Home');
       })
       .catch((error) => {
+        Alert.alert("Erro", "Usuário ou senha inválidos");
         console.log("Error", error);
       });
   };
@@ -47,7 +49,8 @@ const SignIn = ({ navigation }) => {
       style={styles.content}
       resizeMode="cover"
     >
-      <SafeAreaView style={{ flex: 1 }}>
+      <SafeAreaView style={{ flex: 1,
+       }}>
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : "height"}
           style={{ flex: 1 }}
@@ -78,8 +81,6 @@ const SignIn = ({ navigation }) => {
                 <Text style={styles.label}>Senha</Text>
                 <TextInput
                   style={styles.input}
-                  keyboardType="visible-password"
-                  secureTextEntry
                   placeholderTextColor="#a5a5a5"
                   placeholder="Senha"
                   placeholderStyle
@@ -93,6 +94,7 @@ const SignIn = ({ navigation }) => {
                     })
                   }
                   onChangeText={(text) => setData({ ...data, password: text })}
+                  secureTextEntry={true}
                 />
                 <View style={styles.boxButton}>
                   <TouchableOpacity

@@ -6,6 +6,7 @@ const styles = StyleSheet.create({
         // height: height,
         alignItems: 'center',
         // justifyContent: 'center',
+      
 
     },
     contentGlobal:{
@@ -15,8 +16,9 @@ const styles = StyleSheet.create({
     content: {
         flex: 1,
         justifyContent: 'center',
-        width: width,
-        height: height,
+        // width: width,
+        backgroundColor: "#B22E6F",
+        height: Dimensions.get('screen').height,
     },
     logoContent: {
         flexDirection: 'row',

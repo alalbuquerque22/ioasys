@@ -126,6 +126,7 @@ const styles = StyleSheet.create({
       buttonUnselected: {
         marginVertical:3,
         marginHorizontal:5,
+        backgroundColor: "#FFF",
         fontFamily: 'Heebo_400Regular',
         borderColor:'#ACACAC',
         borderWidth:1,

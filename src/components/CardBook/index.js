@@ -1,7 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { Image, Text, View } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { TouchableOpacity } from "react-native";
 import styles from "./styles";
 // export interface Book {
 //     id: string,
@@ -23,7 +23,10 @@ const CardBook = ({ id,imageUrl,title,authors,pageCount,publisher,published,obje
 
 
         <TouchableOpacity activeOpacity={0.8} onPress={()=>{navigate('Book',{
-            object:object
+            object:object,
+            callBack:()=>{
+                console.log('callBack')
+            }
         })}}>
 
         <View style={styles.content}>
@@ -40,7 +43,7 @@ const CardBook = ({ id,imageUrl,title,authors,pageCount,publisher,published,obje
 
                     </View>
                     <View style={styles.cardText}>
-                        <Text style={styles.cardTitle}>
+                        <Text numberOfLines={1} style={styles.cardTitle}>
                             {title}
                         </Text>
                         <Text style={styles.cardAuthor}>

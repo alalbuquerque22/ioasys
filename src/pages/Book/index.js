@@ -10,7 +10,7 @@ import {
 import { Fontisto } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import styles from "./styles";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { TouchableOpacity } from "react-native";
 const Book = ({ navigation, route }) => {
   const { width, height } = Dimensions.get("window");
 
